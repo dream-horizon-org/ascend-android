@@ -43,7 +43,7 @@ Add the SDK dependency to your app module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.dream.sports:ascend-android:1.0.1")
+    implementation("com.dream11:ascend-android-sdk:1.0.0")
 }
 ```
 
