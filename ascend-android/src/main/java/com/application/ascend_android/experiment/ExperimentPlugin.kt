@@ -13,13 +13,13 @@ class DRSPlugin : IPlugin {
     private lateinit var baseExperimentService: BaseExperimentService
 
     private fun callExperimentIfNeeded(context: Context) {
-        if (experimentConfig.shouldFetchOnInit && checkIfUserOrGuestIdsArePresent())
+        if (experimentConfig.shouldFetchOnInit && checkIfUserOrStableIdsArePresent())
             daggerDRSComponent.provideExperimentService()
                 .refreshExperiment(experimentConfig.iExperimentCallback)
     }
 
-    private fun checkIfUserOrGuestIdsArePresent() =
-        (AscendUser.guestId.isNotEmpty() || AscendUser.userId.isNotEmpty())
+    private fun checkIfUserOrStableIdsArePresent() =
+        (AscendUser.stableId.isNotEmpty() || AscendUser.userId.isNotEmpty())
 
     private fun injectExperimentDependencies(context: Context) {
         daggerCoreComponent = CoreCapabilities.init(context, experimentConfig)

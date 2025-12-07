@@ -75,9 +75,9 @@ class ExperimentRepositoryTest {
     }
 
     @Test
-    fun `should update header maps with guest id`() {
+    fun `should update header maps with stable id`() {
         // Given
-        every { AscendUser.guestId } returns "test-guest-id"
+        every { AscendUser.stableId } returns "test-stable-id"
         every { AscendUser.userId } returns ""
         val customHeaders = HashMap<String, Any>()
         customHeaders["custom-header"] = "custom-value"
@@ -89,7 +89,7 @@ class ExperimentRepositoryTest {
         experimentRepository.updateHeaderMaps(customHeaders)
 
         // Then
-        verify { mockHttpConfig.updateHeaderMap("guest-id", "test-guest-id") }
+        verify { mockHttpConfig.updateHeaderMap("stable-id", "test-stable-id") }
         verify { mockHttpConfig.removeKeyFromHeaderMap("user-id") }
         verify { mockHttpConfig.updateHeaderMap("custom-header", "custom-value") }
     }
@@ -97,7 +97,7 @@ class ExperimentRepositoryTest {
     @Test
     fun `should update header maps with user id`() {
         // Given
-        every { AscendUser.guestId } returns ""
+        every { AscendUser.stableId } returns ""
         every { AscendUser.userId } returns "test-user-id"
         val customHeaders = HashMap<String, Any>()
 
@@ -108,7 +108,7 @@ class ExperimentRepositoryTest {
         experimentRepository.updateHeaderMaps(customHeaders)
 
         // Then
-        verify { mockHttpConfig.removeKeyFromHeaderMap("guest-id") }
+        verify { mockHttpConfig.removeKeyFromHeaderMap("stable-id") }
         verify { mockHttpConfig.updateHeaderMap("user-id", "test-user-id") }
     }
 

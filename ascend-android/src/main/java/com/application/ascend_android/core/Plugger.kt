@@ -20,7 +20,7 @@ class Ascend {
             if (BuildConfig.DEBUG) {
                 PluggerCapabilities.init(context, pluggerConfig)
 
-                user.initializeGuestId(context.applicationContext)
+                user.initializeStableId(context.applicationContext)
                 Log.i(LOG_TAG, "Plugger core initialized successfully")
                 return
             }
@@ -28,7 +28,7 @@ class Ascend {
             if (!isInitialized) {
                 isInitialized = true
                 PluggerCapabilities.init(context, pluggerConfig)
-                user.initializeGuestId(context.applicationContext)
+                user.initializeStableId(context.applicationContext)
                 Log.i(LOG_TAG, "Plugger core initialized successfully")
             } else {
                 Log.e(LOG_TAG, customException)

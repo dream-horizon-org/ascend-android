@@ -26,11 +26,11 @@ class ExperimentRepository @Inject constructor(val moduleProvider: IModuleProvid
     }
 
     override fun updateHeaderMaps(customHeaders: HashMap<String, Any>) {
-        if (AscendUser.guestId.isNotEmpty()) {
+        if (AscendUser.stableId.isNotEmpty()) {
             moduleProvider.getConfig().httpConfig()
-                .updateHeaderMap(guestId, AscendUser.guestId)
+                .updateHeaderMap(stableId, AscendUser.stableId)
         } else {
-            moduleProvider.getConfig().httpConfig().removeKeyFromHeaderMap(guestId)
+            moduleProvider.getConfig().httpConfig().removeKeyFromHeaderMap(stableId)
         }
 
         if (AscendUser.userId.isNotEmpty()) {
@@ -65,10 +65,10 @@ class ExperimentRepository @Inject constructor(val moduleProvider: IModuleProvid
     }
 
     override fun addAPIKeyToHeader() {
-        moduleProvider.getConfig().httpConfig().updateHeaderMap(
-            "TestKey",
-            moduleProvider.getPluggerConfig().pluggerClientConfig().clientApiKey()
-        )
+        val apiKey = moduleProvider.getPluggerConfig().pluggerClientConfig().clientApiKey()
+        if (apiKey.isNotEmpty()) {
+            moduleProvider.getConfig().httpConfig().updateHeaderMap("x-project-key", apiKey)
+        }
     }
 
     override fun saveLocalMap(experimentsMap: Map<String, ExperimentDetails>) {

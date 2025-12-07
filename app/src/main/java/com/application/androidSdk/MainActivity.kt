@@ -29,42 +29,13 @@ import org.json.JSONObject
 const val CONNECTION_TIMEOUT = 5000L
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var configStore: ConfigStore
-
-    var constdefaultMap = HashMap<String, JsonObject?>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        configStore = ConfigStore(this)
-        val retrialConfig = RetrialConfig(
-            attempts = 3,
-            delay = Delay(time = 2000, policy = RetryPolicy.LINEAR)
-        )
-        val timeOutConfig = TimeoutConfig(
-            callTimeout = CONNECTION_TIMEOUT,
-            shouldEnableLogging = true
-        )
-        val headersMap = HashMap<String, String>()
-        headersMap["api-key"] = "0a4bcafc-d0b2-4477-9482-f9ba57cf58f3"
-        val baseEventsURL =
-            "http://10.158.112.184:3000/" // Local IP address
         val httpConfig = HttpConfig(
-            apiBaseUrl = baseEventsURL,
-            shouldRetry = false,
-            fetchInterval = 1000L,
-            retrialConfig = retrialConfig,
-            timeOutConfig = timeOutConfig,
-            headers = headersMap
+            apiBaseUrl = "http://10.158.112.184:8100/"
         )
 
-        val clientConfig = ClientConfig(
-            apiKey = "0a4bcafc-d0b2-4477-9482-f9ba57cf58f3" // Use the actual API key
-        )
-
-
-        // experiment
         val experimentConfig: ExperimentConfig =
             ExperimentConfig.Builder(object : IExperimentCallback {
                 override fun onFailure(throwable: Throwable) {
@@ -74,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
             })
-                .defaultValues(constdefaultMap)
+                .defaultValues(hashMapOf())
                 .shouldFetchOnInit(false)
                 .httpConfig(httpConfig)
                 .shouldRefreshDRSOnForeground(true) //check
@@ -89,10 +60,10 @@ class MainActivity : AppCompatActivity() {
         val ascendConfig = AscendConfig(
             httpConfig = httpConfig,
             plugins = arrayListOf(experimentsPluginConfig),
-            clientConfig = clientConfig
+            clientConfig = ClientConfig("my-project")
         )
         Ascend.init(ascendConfig, this)
-        AscendUser.setUser("148925305") // Match the user-id from the curl command
+        AscendUser.setUser("148925305")
 
 
         enableEdgeToEdge()

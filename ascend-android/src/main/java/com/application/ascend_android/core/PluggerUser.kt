@@ -5,35 +5,35 @@ import android.location.Address
 import android.util.Log
 
 
-const val guestId = "guest-id"
+const val stableId = "stable-id"
 const val userId = "user-id"
 
 
 object AscendUser  {
     var isUserLoggedIn: Boolean = false
-    var guestId: String = ""
+    var stableId: String = ""
     var userId: String = ""
     var refreshToken: String = ""
 
     /**
-     * Initializes the guest ID for the user.
+     * Initializes the stable ID for the user.
      * This should be called during SDK initialization.
      * 
      * @param context The application context
      */
-    fun initializeGuestId(context: Context) {
-        if (guestId.isEmpty()) {
-            guestId = GuestIdProvider.getOrCreate(context)
-            Log.i(LOG_TAG, "AscendUser: Guest ID initialized: $guestId")
+    fun initializeStableId(context: Context) {
+        if (stableId.isEmpty()) {
+            stableId = StableIdProvider.getOrCreate(context)
+            Log.i(LOG_TAG, "AscendUser: Stable ID initialized: $stableId")
         } else {
-            Log.d(LOG_TAG, "AscendUser: Guest ID already set: $guestId")
+            Log.d(LOG_TAG, "AscendUser: Stable ID already set: $stableId")
         }
     }
 
 
-    private fun setAsLoggedOut(guestId: String, authToken: String) {
+    private fun setAsLoggedOut(stableId: String, authToken: String) {
         isUserLoggedIn = false
-        userId = guestId
+        userId = stableId
         PluggerCapabilities.daggerPluggerComponent.providePluginManager()
             .notifyAllPlugins(PluggerEvents.USER_LOGGED_OUT)
 
@@ -48,8 +48,8 @@ object AscendUser  {
     }
 
 
-    fun setGuest(guestId: String) {
-        this.guestId = guestId
+    fun setStable(stableId: String) {
+        this.stableId = stableId
         this.userId = ""
     }
 
