@@ -65,7 +65,10 @@ class ExperimentRepository @Inject constructor(val moduleProvider: IModuleProvid
     }
 
     override fun addAPIKeyToHeader() {
-        // No longer adding API key to headers - it's passed via httpConfig headers
+        val apiKey = moduleProvider.getPluggerConfig().pluggerClientConfig().clientApiKey()
+        if (apiKey.isNotEmpty()) {
+            moduleProvider.getConfig().httpConfig().updateHeaderMap("x-project-key", apiKey)
+        }
     }
 
     override fun saveLocalMap(experimentsMap: Map<String, ExperimentDetails>) {

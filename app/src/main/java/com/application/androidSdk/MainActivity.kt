@@ -29,20 +29,11 @@ import org.json.JSONObject
 const val CONNECTION_TIMEOUT = 5000L
 
 class MainActivity : AppCompatActivity() {
-
-
-    var constdefaultMap = HashMap<String, JsonObject?>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         val httpConfig = HttpConfig(
-            apiBaseUrl =  "http://10.158.112.184:8100/",
-            headers = hashMapOf("x-project-key" to "my-project")
-        )
-
-        val clientConfig = ClientConfig(
-            apiKey = ""
+            apiBaseUrl = "http://10.158.112.184:8100/"
         )
 
         val experimentConfig: ExperimentConfig =
@@ -54,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
             })
-                .defaultValues(constdefaultMap)
+                .defaultValues(hashMapOf())
                 .shouldFetchOnInit(false)
                 .httpConfig(httpConfig)
                 .shouldRefreshDRSOnForeground(true) //check
@@ -69,10 +60,10 @@ class MainActivity : AppCompatActivity() {
         val ascendConfig = AscendConfig(
             httpConfig = httpConfig,
             plugins = arrayListOf(experimentsPluginConfig),
-            clientConfig = clientConfig
+            clientConfig = ClientConfig("my-project")
         )
         Ascend.init(ascendConfig, this)
-        AscendUser.setUser("148925305") // Match the user-id from the curl command
+        AscendUser.setUser("148925305")
 
 
         enableEdgeToEdge()
