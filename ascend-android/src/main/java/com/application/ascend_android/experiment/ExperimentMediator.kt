@@ -111,17 +111,32 @@ internal class ExperimentMediator @Inject constructor(
         newApiPaths: HashMap<String, JsonObject?>,
         iExperimentCallback: SoftReference<IExperimentCallback>
     ) {
-        val drsExperimentRequest = DRSExperimentRequest(newApiPaths.keys.toList())
+        val drsExperimentRequest = createExperimentRequest(newApiPaths.keys.toList())
         getRemoteData(drsExperimentRequest, iExperimentCallback)
         Log.d(logTag, "getOnDemandData called with soft reference $iExperimentCallback")
     }
 
     fun getRemoteWithPreDefinedRequest(iExperimentCallback: SoftReference<IExperimentCallback>) {
-        val drsExperimentRequest = DRSExperimentRequest(defaultMap.keys.toList())
+        val drsExperimentRequest = createExperimentRequest(defaultMap.keys.toList())
         getRemoteData(drsExperimentRequest, iExperimentCallback)
         Log.d(
             logTag,
             "getRemoteWithPreDefinedRequest called with soft reference $iExperimentCallback"
+        )
+    }
+
+    private fun createExperimentRequest(experimentKeys: List<String>): DRSExperimentRequest {
+        val device = experimentRepository.getDevice()
+        val attributes = ExperimentAttributes(
+            platform = (device.getDevicePlatform() ?: "android").lowercase(),
+            appVersion = device.getAppVersionName() ?: "",
+            buildNumber = device.getAppVersionCode().toString()
+        )
+        return DRSExperimentRequest(
+            experimentKeys = experimentKeys,
+            attributes = attributes,
+            stableId = AscendUser.stableId,
+            userId = AscendUser.userId.takeIf { it.isNotEmpty() }
         )
     }
 
@@ -133,7 +148,7 @@ internal class ExperimentMediator @Inject constructor(
         Log.d(logTag, "=== getRemoteData START ===")
         Log.d(logTag, "Default map size: ${defaultMap.size}")
         Log.d(logTag, "Default map keys: ${defaultMap.keys}")
-        Log.d(logTag, "DRSExperimentRequest apiPaths: ${drsExperimentRequest.apiPaths}")
+        Log.d(logTag, "DRSExperimentRequest experimentKeys: ${drsExperimentRequest.experimentKeys}")
         
         if (defaultMap.isEmpty()) {
             Log.d(logTag, "Default map is empty, returning early")

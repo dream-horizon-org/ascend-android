@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface IApi {
-    @POST("/v1/users/experiments?type=FE")
+    @POST("/v1/allocations")
     suspend fun getDRSExperiments(
         @HeaderMap headers: Map<String, String>,
         @Body commonRequest: Any?

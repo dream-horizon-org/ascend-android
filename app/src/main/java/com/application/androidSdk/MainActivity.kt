@@ -30,41 +30,21 @@ const val CONNECTION_TIMEOUT = 5000L
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var configStore: ConfigStore
 
     var constdefaultMap = HashMap<String, JsonObject?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        configStore = ConfigStore(this)
-        val retrialConfig = RetrialConfig(
-            attempts = 3,
-            delay = Delay(time = 2000, policy = RetryPolicy.LINEAR)
-        )
-        val timeOutConfig = TimeoutConfig(
-            callTimeout = CONNECTION_TIMEOUT,
-            shouldEnableLogging = true
-        )
-        val headersMap = HashMap<String, String>()
-        headersMap["api-key"] = "0a4bcafc-d0b2-4477-9482-f9ba57cf58f3"
-        val baseEventsURL =
-            "http://10.158.112.184:3000/" // Local IP address
         val httpConfig = HttpConfig(
-            apiBaseUrl = baseEventsURL,
-            shouldRetry = false,
-            fetchInterval = 1000L,
-            retrialConfig = retrialConfig,
-            timeOutConfig = timeOutConfig,
-            headers = headersMap
+            apiBaseUrl =  "http://10.158.112.184:8100/",
+            headers = hashMapOf("x-project-key" to "my-project")
         )
 
         val clientConfig = ClientConfig(
-            apiKey = "0a4bcafc-d0b2-4477-9482-f9ba57cf58f3" // Use the actual API key
+            apiKey = ""
         )
 
-
-        // experiment
         val experimentConfig: ExperimentConfig =
             ExperimentConfig.Builder(object : IExperimentCallback {
                 override fun onFailure(throwable: Throwable) {
