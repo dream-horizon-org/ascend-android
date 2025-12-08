@@ -39,11 +39,13 @@ dependencyResolutionManagement {
 
 #### 2. Add Dependency
 
-Add the SDK dependency to your app module's `build.gradle.kts`:
+Add the SDK dependency to your app module's `build.gradle.kts`.  
+To ensure you're always using the latest version, check the latest release on  
+[Maven Central](https://central.sonatype.com/artifact/org.dreamhorizon/ascend-android-sdk/overview).
 
 ```kotlin
 dependencies {
-    implementation("com.dream11:ascend-android-sdk:1.0.0")
+    implementation("org.dreamhorizon:ascend-android-sdk:<latest-version>")
 }
 ```
 
