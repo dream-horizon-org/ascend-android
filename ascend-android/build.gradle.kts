@@ -84,11 +84,11 @@ publishing {
             pom {
                 name.set("asend-android-sdk")
                 description.set("Ascend Android SDK")
-                url.set("https://github.com/ds-horizon/ascend-android")// Repo Path
+                url.set("https://github.com/dream-horizon-org/ascend-android")// Repo Path
                 licenses {
                     license {
                         name.set("Ascend License")
-                        url.set("https://github.com/ds-horizon/ascend-android/blob/main/ascend-android-sdk/LICENSE") //Repo Path to License
+                        url.set("https://github.com/dream-horizon-org/ascend-android/blob/main/LICENSE") //Repo Path to License
                     }
                 }
                 developers {
@@ -110,9 +110,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:git://github.com/ds-horizon/ascend-android.git")//Change This
-                    developerConnection.set("scm:git:ssh://github.com/ds-horizon/ascend-android.git") ///Change This
-                    url.set("https://github.com/ds-horizon/ascend-android")// /Change This
+                    connection.set("scm:git:git://github.com/dream-horizon-org/ascend-android.git")//Change This
+                    developerConnection.set("scm:git:ssh://github.com/dream-horizon-org/ascend-android.git") ///Change This
+                    url.set("https://github.com/dream-horizon-org/ascend-android")// /Change This
                 }
                 withXml {
                     val dependenciesNode = asNode().appendNode("dependencies")
