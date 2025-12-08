@@ -77,7 +77,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("bar") {
-            groupId = "com.dream11" //Change this to your group id io.d11 or com.dream11
+            groupId = "org.dreamhorizon" //Change this to your group id io.d11 or com.dream11
             artifactId = "ascend-android-sdk" // Change this to your artifact id
             version = sdkVersion
             artifact("${layout.buildDirectory.get()}/outputs/aar/ascend-android-release.aar") // Change AAR PATh

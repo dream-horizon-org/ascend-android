@@ -42,7 +42,7 @@ class Ascend {
                 .addPlugin(pluginConfig)
         }
 
-        fun isPluggerInitialised(): Boolean {
+        fun isAscendInitialised(): Boolean {
             return isInitialized
         }
 
