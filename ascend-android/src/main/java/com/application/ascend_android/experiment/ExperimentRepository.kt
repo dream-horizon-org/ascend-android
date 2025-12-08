@@ -26,20 +26,6 @@ class ExperimentRepository @Inject constructor(val moduleProvider: IModuleProvid
     }
 
     override fun updateHeaderMaps(customHeaders: HashMap<String, Any>) {
-        if (AscendUser.stableId.isNotEmpty()) {
-            moduleProvider.getConfig().httpConfig()
-                .updateHeaderMap(stableId, AscendUser.stableId)
-        } else {
-            moduleProvider.getConfig().httpConfig().removeKeyFromHeaderMap(stableId)
-        }
-
-        if (AscendUser.userId.isNotEmpty()) {
-            moduleProvider.getConfig().httpConfig()
-                .updateHeaderMap(userId, AscendUser.userId)
-        } else {
-            moduleProvider.getConfig().httpConfig().removeKeyFromHeaderMap(userId)
-        }
-
         for ((key, value) in customHeaders) {
             if (value != null) {
                 moduleProvider.getConfig().httpConfig().updateHeaderMap(key, value.toString())
