@@ -271,13 +271,13 @@ internal class ExperimentMediator @Inject constructor(
             Log.d(logTag, "Experiment details count: ${experimentDetails.size}")
             
             if (experimentDetails.isNotEmpty()) {
-                Log.d(logTag, "First experiment apiPath: ${experimentDetails[0].apiPath}")
+                Log.d(logTag, "First experiment experimentKey: ${experimentDetails[0].experimentKey}")
                 Log.d(logTag, "First experiment details: ${gson.toJson(experimentDetails[0])}")
             }
 
             val map = experimentDetails.associate { experiment ->
                 Pair(
-                    experiment.apiPath ?: "",
+                    experiment.experimentKey ?: "",
                     experiment
                 )
             }

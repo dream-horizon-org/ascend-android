@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         btnSetStorage.setOnClickListener {
             val experiments = HashMap<String, ExperimentDetails>()
             val details = ExperimentDetails().apply {
-                apiPath = "button_color_test"
+                experimentKey = "button_color_test"
                 experimentName = "Button Color Test"
                 variantName = "variant_a"
                 experimentId = "test-123"

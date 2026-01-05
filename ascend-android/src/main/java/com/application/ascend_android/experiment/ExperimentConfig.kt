@@ -16,16 +16,16 @@ class ExperimentConfig private constructor(
 
     data class Builder(val experimentCallback: IExperimentCallback) {
         private lateinit var httpConfig: HttpConfig
-        private lateinit var apiPaths: ConcurrentHashMap<String, JsonObject?>
+        private lateinit var experimentKeys: ConcurrentHashMap<String, JsonObject?>
         private var shouldFetchOnInit: Boolean = false
         private var shouldFetchOnLogout: Boolean = false
         private var refreshDRSOnForeground: Boolean = false
 
         fun httpConfig(httpConfig: HttpConfig) = apply { this.httpConfig = httpConfig }
 
-        fun defaultValues(api_paths: HashMap<String, JsonObject?>) = apply {
-            this.apiPaths =
-                ConcurrentHashMap(api_paths)
+        fun defaultValues(experiment_keys: HashMap<String, JsonObject?>) = apply {
+            this.experimentKeys =
+                ConcurrentHashMap(experiment_keys)
         }
 
         fun shouldFetchOnInit(shouldFetchOnInit: Boolean) =
@@ -40,7 +40,7 @@ class ExperimentConfig private constructor(
         fun build(): ExperimentConfig {
             return ExperimentConfig(
                 shouldFetchOnInit = shouldFetchOnInit,
-                defaultExperiments = apiPaths,
+                defaultExperiments = experimentKeys,
                 httpConfig = httpConfig,
                 iExperimentCallback = experimentCallback,
                 shouldFetchOnLogout = false,

@@ -6,41 +6,41 @@ const val VALUE = "value"
 
 abstract class BaseExperimentService {
     abstract fun getBooleanFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String = VALUE,
         dontCache: Boolean = false,
         ignoreCache: Boolean = false
     ): Boolean
 
     abstract fun getIntFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String = VALUE,
         dontCache: Boolean = false,
         ignoreCache: Boolean = false
     ): Int
 
     abstract fun getDoubleFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String = VALUE,
         dontCache: Boolean = false,
         ignoreCache: Boolean = false
     ): Double
 
     abstract fun getLongFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String = VALUE,
         dontCache: Boolean = false,
         ignoreCache: Boolean = false
     ): Long
 
     abstract fun getStringFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String = VALUE,
         dontCache: Boolean = false,
         ignoreCache: Boolean = false
     ): String
 
-    abstract fun getAllVariables(apiPath: String): JsonObject?
+    abstract fun getAllVariables(experimentKey: String): JsonObject?
     abstract fun fetchExperiments(map: HashMap<String, JsonObject?>, callback: IExperimentCallback)
     abstract fun refreshExperiment(callback: IExperimentCallback)
     abstract fun getExperimentVariants(): HashMap<String, ExperimentDetails>

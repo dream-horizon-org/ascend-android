@@ -53,7 +53,7 @@ class ExperimentRepository @Inject constructor(val moduleProvider: IModuleProvid
     override fun addAPIKeyToHeader() {
         val apiKey = moduleProvider.getPluggerConfig().pluggerClientConfig().clientApiKey()
         if (apiKey.isNotEmpty()) {
-            moduleProvider.getConfig().httpConfig().updateHeaderMap("x-project-key", apiKey)
+            moduleProvider.getConfig().httpConfig().updateHeaderMap("x-api-key", apiKey)
         }
     }
 

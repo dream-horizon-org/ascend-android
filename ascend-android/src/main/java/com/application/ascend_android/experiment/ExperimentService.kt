@@ -12,14 +12,14 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
     private val logTag = "ExperimentService"
 
     override fun getBooleanFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String,
         dontCache: Boolean,
         ignoreCache: Boolean
     ): Boolean {
         try {
-            val experiment = experimentMediator.experimentMap[apiPath]
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val experiment = experimentMediator.experimentMap[experimentKey]
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             
             // Use unified type-safe retrieval with full fallback chain
             val finalValue = if (!ignoreCache) {
@@ -35,7 +35,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                     // Steps 2-4: Check experimentMap -> defaultMap -> fallback
                     TypeSafetyUtils.getTypeSafeValue(
                         experiment = experiment,
-                        defaultMap = experimentMediator.defaultMap[apiPath],
+                        defaultMap = experimentMediator.defaultMap[experimentKey],
                         variableKey = variable,
                         expectedType = DataType.BOOLEAN,
                         defaultValue = TypeSafetyUtils.DefaultValues.BOOLEAN,
@@ -47,7 +47,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                 // Steps 2-4: Check experimentMap -> defaultMap -> fallback (ignoreCache = true)
                 TypeSafetyUtils.getTypeSafeValue(
                     experiment = experiment,
-                    defaultMap = experimentMediator.defaultMap[apiPath],
+                    defaultMap = experimentMediator.defaultMap[experimentKey],
                     variableKey = variable,
                     expectedType = DataType.BOOLEAN,
                     defaultValue = TypeSafetyUtils.DefaultValues.BOOLEAN,
@@ -58,7 +58,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             
             if (!dontCache) {
                 setAccessMap(
-                    apiPath = apiPath,
+                    experimentKey = experimentKey,
                     variable = variable,
                     currentValueMap,
                     finalValue
@@ -66,9 +66,9 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             }
             return finalValue
         } catch (e: Exception) {
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             if (!dontCache) {
-                setAccessMap(apiPath, variable, currentValueMap, TypeSafetyUtils.DefaultValues.BOOLEAN)
+                setAccessMap(experimentKey, variable, currentValueMap, TypeSafetyUtils.DefaultValues.BOOLEAN)
             }
             Log.e(logTag, "getBooleanFlag error: ${e.message}", e)
             return TypeSafetyUtils.DefaultValues.BOOLEAN
@@ -77,14 +77,14 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
 
 
     override fun getIntFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String,
         dontCache: Boolean,
         ignoreCache: Boolean
     ): Int {
         try {
-            val experiment = experimentMediator.experimentMap[apiPath]
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val experiment = experimentMediator.experimentMap[experimentKey]
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             
             // Use unified type-safe retrieval with full fallback chain
             val finalValue = if (!ignoreCache) {
@@ -100,7 +100,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                     // Steps 2-4: Check experimentMap -> defaultMap -> fallback
                     TypeSafetyUtils.getTypeSafeValue(
                         experiment = experiment,
-                        defaultMap = experimentMediator.defaultMap[apiPath],
+                        defaultMap = experimentMediator.defaultMap[experimentKey],
                         variableKey = variable,
                         expectedType = DataType.INT,
                         defaultValue = TypeSafetyUtils.DefaultValues.INT,
@@ -112,7 +112,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                 // Steps 2-4: Check experimentMap -> defaultMap -> fallback (ignoreCache = true)
                 TypeSafetyUtils.getTypeSafeValue(
                     experiment = experiment,
-                    defaultMap = experimentMediator.defaultMap[apiPath],
+                    defaultMap = experimentMediator.defaultMap[experimentKey],
                     variableKey = variable,
                     expectedType = DataType.INT,
                     defaultValue = TypeSafetyUtils.DefaultValues.INT,
@@ -123,7 +123,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             
             if (!dontCache) {
                 setAccessMap(
-                    apiPath = apiPath,
+                    experimentKey = experimentKey,
                     variable = variable,
                     currentValueMap,
                     finalValue
@@ -131,9 +131,9 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             }
             return finalValue
         } catch (e: Exception) {
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             if (!dontCache) {
-                setAccessMap(apiPath = apiPath, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.INT)
+                setAccessMap(experimentKey = experimentKey, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.INT)
             }
             Log.e(logTag, "getIntFlag error: ${e.message}", e)
             return TypeSafetyUtils.DefaultValues.INT
@@ -141,14 +141,14 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
     }
 
     override fun getDoubleFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String,
         dontCache: Boolean,
         ignoreCache: Boolean
     ): Double {
         try {
-            val experiment = experimentMediator.experimentMap[apiPath]
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val experiment = experimentMediator.experimentMap[experimentKey]
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             
             // Use unified type-safe retrieval with full fallback chain
             val finalValue = if (!ignoreCache) {
@@ -164,7 +164,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                     // Steps 2-4: Check experimentMap -> defaultMap -> fallback
                     TypeSafetyUtils.getTypeSafeValue(
                         experiment = experiment,
-                        defaultMap = experimentMediator.defaultMap[apiPath],
+                        defaultMap = experimentMediator.defaultMap[experimentKey],
                         variableKey = variable,
                         expectedType = DataType.DOUBLE,
                         defaultValue = TypeSafetyUtils.DefaultValues.DOUBLE,
@@ -176,7 +176,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                 // Steps 2-4: Check experimentMap -> defaultMap -> fallback (ignoreCache = true)
                 TypeSafetyUtils.getTypeSafeValue(
                     experiment = experiment,
-                    defaultMap = experimentMediator.defaultMap[apiPath],
+                    defaultMap = experimentMediator.defaultMap[experimentKey],
                     variableKey = variable,
                     expectedType = DataType.DOUBLE,
                     defaultValue = TypeSafetyUtils.DefaultValues.DOUBLE,
@@ -187,7 +187,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             
             if (!dontCache) {
                 setAccessMap(
-                    apiPath = apiPath,
+                    experimentKey = experimentKey,
                     variable = variable,
                     currentValueMap,
                     finalValue
@@ -195,10 +195,10 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             }
             return finalValue
         } catch (e: Exception) {
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
 
             if (!dontCache) {
-                setAccessMap(apiPath = apiPath, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.DOUBLE)
+                setAccessMap(experimentKey = experimentKey, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.DOUBLE)
             }
             Log.e(logTag, "getDoubleFlag error: ${e.message}", e)
             return TypeSafetyUtils.DefaultValues.DOUBLE
@@ -206,14 +206,14 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
     }
 
     override fun getLongFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String,
         dontCache: Boolean,
         ignoreCache: Boolean
     ): Long {
         try {
-            val experiment = experimentMediator.experimentMap[apiPath]
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val experiment = experimentMediator.experimentMap[experimentKey]
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             
             // Use unified type-safe retrieval with full fallback chain
             val finalValue = if (!ignoreCache) {
@@ -229,7 +229,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                     // Steps 2-4: Check experimentMap -> defaultMap -> fallback
                     TypeSafetyUtils.getTypeSafeValue(
                         experiment = experiment,
-                        defaultMap = experimentMediator.defaultMap[apiPath],
+                        defaultMap = experimentMediator.defaultMap[experimentKey],
                         variableKey = variable,
                         expectedType = DataType.LONG,
                         defaultValue = TypeSafetyUtils.DefaultValues.LONG,
@@ -241,7 +241,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                 // Steps 2-4: Check experimentMap -> defaultMap -> fallback (ignoreCache = true)
                 TypeSafetyUtils.getTypeSafeValue(
                     experiment = experiment,
-                    defaultMap = experimentMediator.defaultMap[apiPath],
+                    defaultMap = experimentMediator.defaultMap[experimentKey],
                     variableKey = variable,
                     expectedType = DataType.LONG,
                     defaultValue = TypeSafetyUtils.DefaultValues.LONG,
@@ -252,7 +252,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             
             if (!dontCache) {
                 setAccessMap(
-                    apiPath = apiPath,
+                    experimentKey = experimentKey,
                     variable = variable,
                     currentValueMap,
                     finalValue
@@ -261,9 +261,9 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
 
             return finalValue
         } catch (e: Exception) {
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             if (!dontCache) {
-                setAccessMap(apiPath = apiPath, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.LONG)
+                setAccessMap(experimentKey = experimentKey, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.LONG)
             }
             Log.e(logTag, "getLongFlag error: ${e.message}", e)
             return TypeSafetyUtils.DefaultValues.LONG
@@ -272,14 +272,14 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
     }
 
     override fun getStringFlag(
-        apiPath: String,
+        experimentKey: String,
         variable: String,
         dontCache: Boolean,
         ignoreCache: Boolean
     ): String {
         try {
-            val experiment = experimentMediator.experimentMap[apiPath]
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val experiment = experimentMediator.experimentMap[experimentKey]
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             
             // Use unified type-safe retrieval with full fallback chain
             val finalValue = if (!ignoreCache) {
@@ -295,7 +295,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                     // Steps 2-4: Check experimentMap -> defaultMap -> fallback
                     TypeSafetyUtils.getTypeSafeValue(
                         experiment = experiment,
-                        defaultMap = experimentMediator.defaultMap[apiPath],
+                        defaultMap = experimentMediator.defaultMap[experimentKey],
                         variableKey = variable,
                         expectedType = DataType.STRING,
                         defaultValue = TypeSafetyUtils.DefaultValues.STRING,
@@ -307,7 +307,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
                 // Steps 2-4: Check experimentMap -> defaultMap -> fallback (ignoreCache = true)
                 TypeSafetyUtils.getTypeSafeValue(
                     experiment = experiment,
-                    defaultMap = experimentMediator.defaultMap[apiPath],
+                    defaultMap = experimentMediator.defaultMap[experimentKey],
                     variableKey = variable,
                     expectedType = DataType.STRING,
                     defaultValue = TypeSafetyUtils.DefaultValues.STRING,
@@ -318,7 +318,7 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             
             if (!dontCache) {
                 setAccessMap(
-                    apiPath = apiPath,
+                    experimentKey = experimentKey,
                     variable = variable,
                     currentValueMap,
                     finalValue
@@ -326,24 +326,24 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
             }
             return finalValue
         } catch (e: Exception) {
-            val currentValueMap = experimentMediator.accessedMap[apiPath] ?: ConcurrentHashMap()
+            val currentValueMap = experimentMediator.accessedMap[experimentKey] ?: ConcurrentHashMap()
             if (!dontCache) {
-                setAccessMap(apiPath = apiPath, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.STRING)
+                setAccessMap(experimentKey = experimentKey, variable = variable, currentValueMap, TypeSafetyUtils.DefaultValues.STRING)
             }
             Log.e(logTag, "getStringFlag error: ${e.message}", e)
             return TypeSafetyUtils.DefaultValues.STRING
         }
     }
 
-    override fun getAllVariables(apiPath: String): JsonObject? {
-        val experiment = experimentMediator.experimentMap[apiPath]
+    override fun getAllVariables(experimentKey: String): JsonObject? {
+        val experiment = experimentMediator.experimentMap[experimentKey]
         try {
             experiment?.variables?.let {
-                Log.d(logTag, "getAllVariables: returning all variables for $apiPath")
+                Log.d(logTag, "getAllVariables: returning all variables for $experimentKey")
                 return it
             } ?: run {
-                Log.d(logTag, "getAllVariables: returning default variables for $apiPath")
-                return experimentMediator.defaultMap[apiPath]
+                Log.d(logTag, "getAllVariables: returning default variables for $experimentKey")
+                return experimentMediator.defaultMap[experimentKey]
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -397,12 +397,12 @@ internal class DRSExperimentService @Inject constructor(private val experimentMe
     }
 
     private fun setAccessMap(
-        apiPath: String,
+        experimentKey: String,
         variable: String,
         currentValueMap: ConcurrentHashMap<String, Any>,
         value: Any
     ) {
         currentValueMap[variable] = value
-        experimentMediator.accessedMap[apiPath] = currentValueMap
+        experimentMediator.accessedMap[experimentKey] = currentValueMap
     }
 }
