@@ -21,11 +21,13 @@ if (localPropertiesFile.exists()) {
         }
     }
 }
+
+val sdkVersion = "1.0.1"
 fun getLocalProperty(key: String): String? = localProperties[key]
 val signingKeyId = getLocalProperty("signing.keyId") ?: ""
 val signingKey = getLocalProperty("signing.key") ?: ""
 val signingPassword = getLocalProperty("signing.password") ?: ""
-val sdkVersion = getLocalProperty("sdk_version") ?:"0.0.0"
+//val sdkVersion = getLocalProperty("sdk_version") ?:"0.0.0"
 android {
     namespace = "com.application.ascend_android"
     compileSdk = 36
