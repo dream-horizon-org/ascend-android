@@ -10,10 +10,10 @@ class ExperimentDetails {
     @Expose
     var experimentId: String? = null
 
-    // experiment_key is the key used for identifying experiments (apiPath)
+    // experiment_key is the key used for identifying experiments
     @SerializedName("experiment_key")
     @Expose
-    var apiPath: String? = null
+    var experimentKey: String? = null
 
     @SerializedName("experiment_name")
     @Expose

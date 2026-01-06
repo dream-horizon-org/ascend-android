@@ -87,8 +87,8 @@ internal class ExperimentMediator @Inject constructor(
     }
 
 
-    fun appendDefaultMap(newApiPaths: HashMap<String, JsonObject?>) {
-        newApiPaths.map {
+    fun appendDefaultMap(newExperimentKeys: HashMap<String, JsonObject?>) {
+        newExperimentKeys.map {
             defaultMap[it.key] = it.value
         }
         Log.d(logTag, "appendDefaultMap called")
@@ -108,10 +108,10 @@ internal class ExperimentMediator @Inject constructor(
     }
 
     fun getOnDemandData(
-        newApiPaths: HashMap<String, JsonObject?>,
+        newExperimentKeys: HashMap<String, JsonObject?>,
         iExperimentCallback: SoftReference<IExperimentCallback>
     ) {
-        val drsExperimentRequest = createExperimentRequest(newApiPaths.keys.toList())
+        val drsExperimentRequest = createExperimentRequest(newExperimentKeys.keys.toList())
         getRemoteData(drsExperimentRequest, iExperimentCallback)
         Log.d(logTag, "getOnDemandData called with soft reference $iExperimentCallback")
     }
@@ -271,13 +271,13 @@ internal class ExperimentMediator @Inject constructor(
             Log.d(logTag, "Experiment details count: ${experimentDetails.size}")
             
             if (experimentDetails.isNotEmpty()) {
-                Log.d(logTag, "First experiment apiPath: ${experimentDetails[0].apiPath}")
+                Log.d(logTag, "First experiment experimentKey: ${experimentDetails[0].experimentKey}")
                 Log.d(logTag, "First experiment details: ${gson.toJson(experimentDetails[0])}")
             }
 
             val map = experimentDetails.associate { experiment ->
                 Pair(
-                    experiment.apiPath ?: "",
+                    experiment.experimentKey ?: "",
                     experiment
                 )
             }
